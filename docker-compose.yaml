@@ -1,0 +1,11 @@
+services:
+  redis_insight:
+    image: "redislabs/redisinsight:latest"
+    container_name: redisinsight
+    ports:
+      - "5540:5540"
+    volumes:
+      - redis_insight_data:/data
+ 
+volumes:
+  redis_insight_data:
