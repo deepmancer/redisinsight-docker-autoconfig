@@ -1,11 +1,27 @@
+# 🚀 RedisInsight Docker Automated Configuration
 
-# RedisInsight Docker AutoConfig
+<p align="center">
+    <img src="https://img.shields.io/badge/Redis-FF4438.svg?style=for-the-badge&logo=Redis&logoColor=white" alt="Redis">
+    <img src="https://img.shields.io/badge/Docker-2496ED.svg?style=for-the-badge&logo=Docker&logoColor=white" alt="Docker">
+    <img src="https://img.shields.io/badge/shell_script-%23121011.svg?style=for-the-badge&logo=gnu-bash&logoColor=white"/>
+    <img src="https://img.shields.io/badge/Linux-FCC624.svg?style=for-the-badge&logo=Linux&logoColor=black"/>
+    <img src="https://img.shields.io/badge/GNU%20Bash-4EAA25.svg?style=for-the-badge&logo=GNU-Bash&logoColor=white"/>
+</p>
 
-This repository contains a Docker Compose setup for RedisInsight and a Bash script to automate the configuration of Redis databases within RedisInsight. This script makes it easy to add multiple Redis instances to your RedisInsight setup, streamlining your workflow.
+Welcome to the **RedisInsight Docker AutoConfig** repository! This repository includes a Docker Compose setup for RedisInsight, alongside a powerful Bash script that automates the configuration of multiple Redis databases within RedisInsight. Simplify your workflow and let the script handle the heavy lifting for you!
 
-## Docker Compose Setup
+---
 
-The following `docker-compose.yml` sets up a RedisInsight service:
+## ✨ Features
+
+Here’s what the script does for you:
+1. **Network Configuration**: Automatically retrieves the gateway IP of your specified Docker network.
+2. **Initial Setup**: Applies essential settings to RedisInsight, including EULA acceptance.
+3. **Redis Integration**: Adds multiple Redis databases to RedisInsight in one go.
+
+## 🚨 Docker Compose Setup
+
+Use the following `docker-compose.yml` to set up your RedisInsight service:
 
 ```yaml
 services:
@@ -21,19 +37,15 @@ volumes:
   redis_insight_data:
 ```
 
-## Script Overview
+---
 
-The `add_datasources.sh` script automates the process of adding Redis databases to RedisInsight using its API. The script performs the following tasks:
+## 📝 Script Overview
 
-1. Retrieves the gateway IP address of a specified Docker network.
-2. Applies initial settings to RedisInsight (e.g., EULA agreements).
-3. Iterates over a list of Redis instances, adding each one to RedisInsight.
+The `add_datasources.sh` script automates adding Redis databases to RedisInsight via its API. Here’s what it covers:
 
-### Script Breakdown
+### 1. Configuration
 
-#### 1. Configuration
-
-The script begins by defining the API URL for RedisInsight and the Docker network name. It then retrieves the gateway IP for the specified network. If the network is not found, it defaults to `127.0.0.1`:
+The script starts by defining the API URL for RedisInsight and the Docker network name. It then retrieves the gateway IP for your specified network. If the network is not found, it defaults to `127.0.0.1`:
 
 ```bash
 API_URL="http://localhost:5540/api"
@@ -49,9 +61,9 @@ fi
 echo "Gateway IP for network '$NETWORK_NAME' is $GATEWAY_IP"
 ```
 
-#### 2. Apply Initial Settings
+### 2. Apply Initial Settings
 
-The script applies initial settings to RedisInsight, such as accepting the EULA and disabling analytics:
+The script applies essential settings to RedisInsight, such as accepting the EULA and disabling analytics:
 
 ```bash
 SETTINGS_PAYLOAD='{
@@ -66,9 +78,9 @@ SETTINGS_PAYLOAD='{
 curl -X GET "${API_URL}/settings"      -H "Content-Type: application/json"      -d "$SETTINGS_PAYLOAD" > /dev/null 2>&1
 ```
 
-#### 3. Define and Add Redis Databases
+### 3. Define and Add Redis Databases
 
-The script then iterates over a list of Redis instances, adding each one to RedisInsight:
+The script iterates over a list of Redis instances, adding each one to RedisInsight:
 
 ```bash
 # Redis instances configuration
@@ -112,21 +124,25 @@ done
 echo "All Redis databases have been added successfully."
 ```
 
-### Usage
+---
 
-1. **Customize the Script**: Update the configuration variables with your RedisInsight details and Docker network name. Modify the `REDIS_INSTANCES` array to include your Redis databases.
+## 🚀 How to Use
+
+1. **Customize the Script**: Edit the configuration variables to match your RedisInsight setup and Docker network. Modify the `REDIS_INSTANCES` array to include your Redis databases.
 
 2. **Run the Script**: Make the script executable and run it:
 
     ```bash
-    chmod +x add_![image](https://github.com/user-attachments/assets/af131d10-dc22-4802-8728-8f30f3788d74).sh
+    chmod +x add_datasources.sh
     ./add_datasources.sh
     ```
 
-3. **Check Results**: Verify that the Redis databases have been added to your RedisInsight instance by logging into RedisInsight and checking the list of databases.
+3. **Verify the Results**: Log into RedisInsight and check that your databases have been added successfully.
 
 ![image](https://github.com/user-attachments/assets/f6276046-624e-4690-bc28-d0d5df9a1eac)
 
-## License
+---
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## 📜 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
